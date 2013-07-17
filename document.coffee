@@ -72,7 +72,4 @@ Element::removeClass = (c) ->
   undefined
 
 $ = Document
-window.$ = jd
-
-window.onload = ->
-  window.console.log '=', jd '#target'
+window.$ = $

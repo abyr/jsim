@@ -98,10 +98,6 @@
 
   $ = Document;
 
-  window.$ = jd;
-
-  window.onload = function() {
-    return window.console.log('=', jd('#target'));
-  };
+  window.$ = $;
 
 }).call(this);
