@@ -52,22 +52,24 @@ Document = (s) ->
       @byClass s
     else
       false
-
-  @val = (el) ->
-    undefined
-
-  @html = (el) ->
-    undefined
-
   @init s
 
 Element::html = (v) ->
-  return @.innerHTML unless v
-  @.innerHTML = "" + v if v
+  window.console.log v
+  if typeof v is 'undefined'
+    return @.innerHTML
+  @.innerHTML = "" + v
   undefined
 
-jd = Document
-window.jd = jd
+Element::addClass = (c) ->
+  @.className += " " + c + " "
+  undefined
 
-window.onload = ->
-  window.console.log '=', jd '#target'
+Element::removeClass = (c) ->
+  r = new RegExp "\s"+c+'\\s?', 'gi'
+  @.className = (" " + @.className).replace r, ''
+  @.className = @.className.substr 1 if @.className[0] is ' '
+  undefined
+
+$ = Document
+window.$ = $
