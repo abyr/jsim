@@ -1,0 +1,14 @@
+{
+  "name": "jsim",
+  "version": "0.0.0",
+  "main": "jsim.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "dependencies": {
+    "jasmine-jquery": "~1.5.3",
+    "jasmine": "~1.3.1"
+  }
+}
