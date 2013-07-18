@@ -61,21 +61,31 @@ Element::html = (v) ->
   @.innerHTML = "" + v
   undefined
 
+Element::val = ->
+  @.value
+
 Element::addClass = (c) ->
   @.className += " " + c + " "
   undefined
-
 Element::removeClass = (c) ->
   r = new RegExp "\s"+c+'\\s?', 'gi'
   @.className = (" " + @.className).replace r, ''
   @.className = @.className.substr 1 if @.className[0] is ' '
   undefined
-
 Element::hasClass = (c) ->
   @.className.split(" ").indexOf(c) isnt -1
 
-Element::val = ->
-  @.value
+Element::show = ->
+  @.style.display = ''
+Element::hide = ->
+  @.style.display = 'none'
+
+NodeList::show = ->
+  el.show() for el in @
+  undefined
+NodeList::hide = ->
+  el.hide() for el in @
+  undefined
 
 $ = Document
 window.$ = $

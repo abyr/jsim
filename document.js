@@ -80,6 +80,10 @@
     return void 0;
   };
 
+  Element.prototype.val = function() {
+    return this.value;
+  };
+
   Element.prototype.addClass = function(c) {
     this.className += " " + c + " ";
     return void 0;
@@ -100,8 +104,32 @@
     return this.className.split(" ").indexOf(c) !== -1;
   };
 
-  Element.prototype.val = function() {
-    return this.value;
+  Element.prototype.show = function() {
+    return this.style.display = '';
+  };
+
+  Element.prototype.hide = function() {
+    return this.style.display = 'none';
+  };
+
+  NodeList.prototype.show = function() {
+    var el, _i, _len;
+
+    for (_i = 0, _len = this.length; _i < _len; _i++) {
+      el = this[_i];
+      el.show();
+    }
+    return void 0;
+  };
+
+  NodeList.prototype.hide = function() {
+    var el, _i, _len;
+
+    for (_i = 0, _len = this.length; _i < _len; _i++) {
+      el = this[_i];
+      el.hide();
+    }
+    return void 0;
   };
 
   $ = Document;
