@@ -71,5 +71,8 @@ Element::removeClass = (c) ->
   @.className = @.className.substr 1 if @.className[0] is ' '
   undefined
 
+Element::hasClass = (c) ->
+  @.className.split(" ").indexOf(c) isnt -1
+
 $ = Document
 window.$ = $

@@ -96,6 +96,10 @@
     return void 0;
   };
 
+  Element.prototype.hasClass = function(c) {
+    return this.className.split(" ").indexOf(c) !== -1;
+  };
+
   $ = Document;
 
   window.$ = $;
