@@ -3,9 +3,19 @@
   var $, Document;
 
   Document = function(s) {
+    if (!s || s === document) {
+      return document;
+    }
+    if (typeof s === 'function') {
+      document.ready(s);
+      return void 0;
+    }
     this.init = function(s) {
       var s0;
 
+      if (s === document) {
+        return s;
+      }
       if (s === 'html') {
         return document.documentElement;
       }
@@ -16,7 +26,6 @@
         return document.body;
       }
       if (s.indexOf(',' === -1)) {
-        window.console.log('single selector', s);
         s0 = s[0];
         s = s.substr(1);
         if (s0 === '#') {
@@ -30,21 +39,17 @@
       return this.bySelectors(s);
     };
     this.byId = function(s) {
-      window.console.log('by id', s);
       return document.getElementById(s);
     };
     this.byClass = function(s) {
-      window.console.log('by class', s);
       return document.getElementsByClassName(s);
     };
     this.byTag = function(s) {
-      window.console.log('by tag', s);
       return document.getElementsByTagName(s);
     };
     this.bySelectors = function(ss) {
       var i, list, selectors;
 
-      window.console.log('by selectors', ss);
       selectors = ss.split(",");
       list = [];
       i = selectors.length - 1;
@@ -57,7 +62,6 @@
     this.bySelector = function(s) {
       var s0;
 
-      window.console.log('by selector', s);
       s0 = s[0];
       s = s.substr(1);
       if (s0 === '#') {
@@ -71,13 +75,24 @@
     return this.init(s);
   };
 
+  HTMLDocument.prototype.ready = function(f) {
+    return document.onreadystatechange = function() {
+      if (document.readyState === "complete") {
+        return f();
+      }
+    };
+  };
+
   Element.prototype.html = function(v) {
-    window.console.log(v);
     if (typeof v === 'undefined') {
       return this.innerHTML;
     }
     this.innerHTML = "" + v;
     return void 0;
+  };
+
+  Element.prototype.val = function() {
+    return this.value;
   };
 
   Element.prototype.addClass = function(c) {
@@ -94,6 +109,65 @@
       this.className = this.className.substr(1);
     }
     return void 0;
+  };
+
+  Element.prototype.hasClass = function(c) {
+    return this.className.split(" ").indexOf(c) !== -1;
+  };
+
+  Element.prototype.show = function() {
+    return this.style.display = '';
+  };
+
+  Element.prototype.hide = function() {
+    return this.style.display = 'none';
+  };
+
+  NodeList.prototype.show = function() {
+    var el, _i, _len;
+
+    for (_i = 0, _len = this.length; _i < _len; _i++) {
+      el = this[_i];
+      el.show();
+    }
+    return void 0;
+  };
+
+  NodeList.prototype.hide = function() {
+    var el, _i, _len;
+
+    for (_i = 0, _len = this.length; _i < _len; _i++) {
+      el = this[_i];
+      el.hide();
+    }
+    return void 0;
+  };
+
+  Element.prototype.css = function(k, v) {
+    k = k.toCamelCase();
+    if (this.style.hasOwnProperty(k)) {
+      this.style[k] = v;
+    }
+    return void 0;
+  };
+
+  NodeList.prototype.css = function(k, v) {
+    var el, _i, _len;
+
+    k = k.toCamelCase();
+    for (_i = 0, _len = this.length; _i < _len; _i++) {
+      el = this[_i];
+      if (el.style.hasOwnProperty(k)) {
+        el.style[k] = v;
+      }
+    }
+    return void 0;
+  };
+
+  String.prototype.toCamelCase = function() {
+    return this.toLowerCase().replace(/-(.)/g, function(m, g) {
+      return g.toUpperCase();
+    });
   };
 
   $ = Document;

@@ -1,6 +1,15 @@
 Document = (s) ->
 
+  return document if not s or s is document
+
+  if typeof s is 'function'
+    document.ready s
+    return undefined
+
   @init = (s) ->
+
+    return s if s is document
+
     if s is 'html'
       return document.documentElement
     if s is 'head'
@@ -9,7 +18,6 @@ Document = (s) ->
       return document.body
 
     if s.indexOf ',' is -1
-      window.console.log 'single selector', s
       s0 = s[0]
       s = s.substr 1
       if s0 is '#'
@@ -21,19 +29,15 @@ Document = (s) ->
     @bySelectors s
 
   @byId = (s) ->
-    window.console.log 'by id', s
     document.getElementById s
 
   @byClass = (s) ->
-    window.console.log 'by class', s
     document.getElementsByClassName s
 
   @byTag = (s) ->
-    window.console.log 'by tag', s
     document.getElementsByTagName s
 
   @bySelectors = (ss) ->
-    window.console.log 'by selectors', ss
     selectors = ss.split ","
     list = []
     i = selectors.length - 1
@@ -43,7 +47,6 @@ Document = (s) ->
     list
 
   @bySelector = (s) ->
-    window.console.log 'by selector', s
     s0 = s[0]
     s = s.substr 1
     if s0 is '#'
@@ -54,22 +57,54 @@ Document = (s) ->
       false
   @init s
 
+HTMLDocument::ready = (f) ->
+  document.onreadystatechange = ->
+    f() if document.readyState is "complete"
+
 Element::html = (v) ->
-  window.console.log v
   if typeof v is 'undefined'
     return @.innerHTML
   @.innerHTML = "" + v
   undefined
 
+Element::val = ->
+  @.value
+
 Element::addClass = (c) ->
   @.className += " " + c + " "
   undefined
-
 Element::removeClass = (c) ->
   r = new RegExp "\s"+c+'\\s?', 'gi'
   @.className = (" " + @.className).replace r, ''
   @.className = @.className.substr 1 if @.className[0] is ' '
   undefined
+Element::hasClass = (c) ->
+  @.className.split(" ").indexOf(c) isnt -1
+
+Element::show = ->
+  @.style.display = ''
+Element::hide = ->
+  @.style.display = 'none'
+NodeList::show = ->
+  el.show() for el in @
+  undefined
+NodeList::hide = ->
+  el.hide() for el in @
+  undefined
+
+Element::css = (k, v) ->
+  k = k.toCamelCase()
+  @.style[k] = v if @.style.hasOwnProperty k
+  undefined
+NodeList::css = (k, v) ->
+  k = k.toCamelCase()
+  for el in @
+    el.style[k] = v if el.style.hasOwnProperty k
+  undefined
+
+String::toCamelCase = ->
+  @.toLowerCase().replace /-(.)/g, (m, g) ->
+    g.toUpperCase()
 
 $ = Document
 window.$ = $
