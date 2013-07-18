@@ -74,5 +74,8 @@ Element::removeClass = (c) ->
 Element::hasClass = (c) ->
   @.className.split(" ").indexOf(c) isnt -1
 
+Element::val = ->
+  @.value
+
 $ = Document
 window.$ = $

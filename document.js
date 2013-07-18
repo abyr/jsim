@@ -100,6 +100,10 @@
     return this.className.split(" ").indexOf(c) !== -1;
   };
 
+  Element.prototype.val = function() {
+    return this.value;
+  };
+
   $ = Document;
 
   window.$ = $;
