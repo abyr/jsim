@@ -1,6 +1,11 @@
 Document = (s) ->
 
+  return document if not s or s is document
+
   @init = (s) ->
+
+    return s if s is document
+
     if s is 'html'
       return document.documentElement
     if s is 'head'
@@ -47,6 +52,10 @@ Document = (s) ->
     else
       false
   @init s
+
+HTMLDocument::ready = (f) ->
+  document.onreadystatechange = ->
+    f() if document.readyState is "complete"
 
 Element::html = (v) ->
   if typeof v is 'undefined'

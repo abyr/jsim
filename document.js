@@ -3,9 +3,15 @@
   var $, Document;
 
   Document = function(s) {
+    if (!s || s === document) {
+      return document;
+    }
     this.init = function(s) {
       var s0;
 
+      if (s === document) {
+        return s;
+      }
       if (s === 'html') {
         return document.documentElement;
       }
@@ -63,6 +69,14 @@
       }
     };
     return this.init(s);
+  };
+
+  HTMLDocument.prototype.ready = function(f) {
+    return document.onreadystatechange = function() {
+      if (document.readyState === "complete") {
+        return f();
+      }
+    };
   };
 
   Element.prototype.html = function(v) {
