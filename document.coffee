@@ -2,6 +2,10 @@ Document = (s) ->
 
   return document if not s or s is document
 
+  if typeof s is 'function'
+    document.ready s
+    return undefined
+
   @init = (s) ->
 
     return s if s is document

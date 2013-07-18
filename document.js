@@ -6,6 +6,10 @@
     if (!s || s === document) {
       return document;
     }
+    if (typeof s === 'function') {
+      document.ready(s);
+      return void 0;
+    }
     this.init = function(s) {
       var s0;
 
