@@ -162,23 +162,30 @@
   };
 
   Element.prototype.css = function(k, v) {
+    if (!k) {
+      return this.style;
+    }
+    if (!v ? this.style.hasOwnProperty(k) : void 0) {
+      return this.style[k];
+    }
     k = k.toCamelCase();
     if (this.style.hasOwnProperty(k)) {
       this.style[k] = v;
     }
-    return void 0;
+    return this;
   };
 
   NodeList.prototype.css = function(k, v) {
     var el, _i, _len;
+    if (!v) {
+      return void 0;
+    }
     k = k.toCamelCase();
     for (_i = 0, _len = this.length; _i < _len; _i++) {
       el = this[_i];
-      if (el.style.hasOwnProperty(k)) {
-        el.style[k] = v;
-      }
+      el.css(k, v);
     }
-    return void 0;
+    return this;
   };
 
   String.prototype.toCamelCase = function() {

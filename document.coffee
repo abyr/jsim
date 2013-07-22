@@ -107,14 +107,18 @@ NodeList::hide = ->
   undefined
 
 Element::css = (k, v) ->
+  return @.style unless k
+  return @.style[k] if @.style.hasOwnProperty k unless v
   k = k.toCamelCase()
   @.style[k] = v if @.style.hasOwnProperty k
-  undefined
+  @
+
 NodeList::css = (k, v) ->
+  return undefined unless v
   k = k.toCamelCase()
   for el in @
-    el.style[k] = v if el.style.hasOwnProperty k
-  undefined
+    el.css k, v
+  @
 
 String::toCamelCase = ->
   @.toLowerCase().replace /-(.)/g, (m, g) ->
