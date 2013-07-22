@@ -100,6 +100,22 @@
     return this;
   };
 
+  Element.prototype.clear = function() {
+    while (this.firstChild) {
+      this.firstChild.remove();
+    }
+    return void 0;
+  };
+
+  NodeList.prototype.clear = function() {
+    var el, _i, _len;
+    for (_i = 0, _len = this.length; _i < _len; _i++) {
+      el = this[_i];
+      el.clear();
+    }
+    return void 0;
+  };
+
   Element.prototype.addClass = function(c) {
     this.className += " " + c + " ";
     return void 0;
@@ -123,10 +139,6 @@
     return this.style.display = '';
   };
 
-  Element.prototype.hide = function() {
-    return this.style.display = 'none';
-  };
-
   NodeList.prototype.show = function() {
     var el, _i, _len;
     for (_i = 0, _len = this.length; _i < _len; _i++) {
@@ -134,6 +146,10 @@
       el.show();
     }
     return void 0;
+  };
+
+  Element.prototype.hide = function() {
+    return this.style.display = 'none';
   };
 
   NodeList.prototype.hide = function() {

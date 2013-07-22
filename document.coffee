@@ -75,6 +75,14 @@ Element::attr = (k, v) ->
   @setAttribute k, v
   this
 
+Element::clear = ->
+  @.firstChild.remove() while @.firstChild
+  undefined
+
+NodeList::clear = ->
+  el.clear() for el in @
+  undefined
+
 Element::addClass = (c) ->
   @.className += " " + c + " "
   undefined
@@ -88,11 +96,12 @@ Element::hasClass = (c) ->
 
 Element::show = ->
   @.style.display = ''
-Element::hide = ->
-  @.style.display = 'none'
 NodeList::show = ->
   el.show() for el in @
   undefined
+
+Element::hide = ->
+  @.style.display = 'none'
 NodeList::hide = ->
   el.hide() for el in @
   undefined
