@@ -92,6 +92,14 @@
     return this.value;
   };
 
+  Element.prototype.attr = function(k, v) {
+    if (!v) {
+      return this.getAttribute(k);
+    }
+    this.setAttribute(k, v);
+    return this;
+  };
+
   Element.prototype.addClass = function(c) {
     this.className += " " + c + " ";
     return void 0;

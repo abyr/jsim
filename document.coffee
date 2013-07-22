@@ -70,6 +70,11 @@ Element::html = (v) ->
 Element::val = ->
   @.value
 
+Element::attr = (k, v) ->
+  return @getAttribute(k) unless v
+  @setAttribute k, v
+  this
+
 Element::addClass = (c) ->
   @.className += " " + c + " "
   undefined
