@@ -62,13 +62,14 @@ HTMLDocument::ready = (f) ->
     f() if document.readyState is "complete"
 
 Element::html = (v) ->
-  if typeof v is 'undefined'
-    return @.innerHTML
+  return @.innerHTML unless v
   @.innerHTML = "" + v
-  undefined
+  @
 
-Element::val = ->
-  @.value
+Element::val = (v) ->
+  return @.value unless v
+  @.value = v
+  @
 
 Element::attr = (k, v) ->
   return @getAttribute(k) unless v

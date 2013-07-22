@@ -81,15 +81,19 @@
   };
 
   Element.prototype.html = function(v) {
-    if (typeof v === 'undefined') {
+    if (!v) {
       return this.innerHTML;
     }
     this.innerHTML = "" + v;
-    return void 0;
+    return this;
   };
 
-  Element.prototype.val = function() {
-    return this.value;
+  Element.prototype.val = function(v) {
+    if (!v) {
+      return this.value;
+    }
+    this.value = v;
+    return this;
   };
 
   Element.prototype.attr = function(k, v) {
