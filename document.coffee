@@ -109,6 +109,8 @@ String::toCamelCase = ->
 Element::on = (evt, callback) ->
   @addEventListener evt, callback
   undefined
+NodeList::on = (evt, callback) ->
+  el.addEventListener evt, callback for el in @
 
 $ = Document
 window.$ = $

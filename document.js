@@ -168,6 +168,16 @@
     return void 0;
   };
 
+  NodeList.prototype.on = function(evt, callback) {
+    var el, _i, _len, _results;
+    _results = [];
+    for (_i = 0, _len = this.length; _i < _len; _i++) {
+      el = this[_i];
+      _results.push(el.addEventListener(evt, callback));
+    }
+    return _results;
+  };
+
   $ = Document;
 
   window.$ = $;

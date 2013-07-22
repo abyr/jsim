@@ -4,8 +4,11 @@
     $("#hidden").on('click', function() {
       return window.console.log("by on");
     });
-    return $("#hidden2").click(function() {
+    $("#hidden2").click(function() {
       return window.console.log("by click");
+    });
+    return $(".ini").on('click', function() {
+      return window.console.log('by on class');
     });
   });
 
