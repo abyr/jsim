@@ -106,5 +106,9 @@ String::toCamelCase = ->
   @.toLowerCase().replace /-(.)/g, (m, g) ->
     g.toUpperCase()
 
+Element::on = (evt, callback) ->
+  @addEventListener evt, callback
+  undefined
+
 $ = Document
 window.$ = $
