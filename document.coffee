@@ -62,13 +62,27 @@ HTMLDocument::ready = (f) ->
     f() if document.readyState is "complete"
 
 Element::html = (v) ->
-  if typeof v is 'undefined'
-    return @.innerHTML
+  return @.innerHTML unless v
   @.innerHTML = "" + v
+  @
+
+Element::val = (v) ->
+  return @.value unless v
+  @.value = v
+  @
+
+Element::attr = (k, v) ->
+  return @getAttribute(k) unless v
+  @setAttribute k, v
+  this
+
+Element::clear = ->
+  @.firstChild.remove() while @.firstChild
   undefined
 
-Element::val = ->
-  @.value
+NodeList::clear = ->
+  el.clear() for el in @
+  undefined
 
 Element::addClass = (c) ->
   @.className += " " + c + " "
@@ -83,28 +97,39 @@ Element::hasClass = (c) ->
 
 Element::show = ->
   @.style.display = ''
-Element::hide = ->
-  @.style.display = 'none'
 NodeList::show = ->
   el.show() for el in @
   undefined
+
+Element::hide = ->
+  @.style.display = 'none'
 NodeList::hide = ->
   el.hide() for el in @
   undefined
 
 Element::css = (k, v) ->
+  return @.style unless k
+  return @.style[k] if @.style.hasOwnProperty k unless v
   k = k.toCamelCase()
   @.style[k] = v if @.style.hasOwnProperty k
-  undefined
+  @
+
 NodeList::css = (k, v) ->
+  return undefined unless v
   k = k.toCamelCase()
   for el in @
-    el.style[k] = v if el.style.hasOwnProperty k
-  undefined
+    el.css k, v
+  @
 
 String::toCamelCase = ->
   @.toLowerCase().replace /-(.)/g, (m, g) ->
     g.toUpperCase()
+
+Element::on = (evt, callback) ->
+  @addEventListener evt, callback
+  undefined
+NodeList::on = (evt, callback) ->
+  el.addEventListener evt, callback for el in @
 
 $ = Document
 window.$ = $
