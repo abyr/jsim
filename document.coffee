@@ -78,20 +78,20 @@ Element::attr = (k, v) ->
 
 Element::clear = ->
   @.firstChild.remove() while @.firstChild
-  undefined
+  @
 
 NodeList::clear = ->
   el.clear() for el in @
-  undefined
+  @
 
 Element::addClass = (c) ->
   @.className += " " + c + " "
-  undefined
+  @
 Element::removeClass = (c) ->
   r = new RegExp "\s"+c+'\\s?', 'gi'
   @.className = (" " + @.className).replace r, ''
   @.className = @.className.substr 1 if @.className[0] is ' '
-  undefined
+  @
 Element::hasClass = (c) ->
   @.className.split(" ").indexOf(c) isnt -1
 
@@ -99,13 +99,13 @@ Element::show = ->
   @.style.display = ''
 NodeList::show = ->
   el.show() for el in @
-  undefined
+  @
 
 Element::hide = ->
   @.style.display = 'none'
 NodeList::hide = ->
   el.hide() for el in @
-  undefined
+  @
 
 Element::css = (k, v) ->
   return @.style unless k
@@ -127,9 +127,10 @@ String::toCamelCase = ->
 
 Element::on = (evt, callback) ->
   @addEventListener evt, callback
-  undefined
+  @
 NodeList::on = (evt, callback) ->
   el.addEventListener evt, callback for el in @
+  @
 
 $ = Document
 window.$ = $

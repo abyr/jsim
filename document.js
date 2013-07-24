@@ -108,7 +108,7 @@
     while (this.firstChild) {
       this.firstChild.remove();
     }
-    return void 0;
+    return this;
   };
 
   NodeList.prototype.clear = function() {
@@ -117,12 +117,12 @@
       el = this[_i];
       el.clear();
     }
-    return void 0;
+    return this;
   };
 
   Element.prototype.addClass = function(c) {
     this.className += " " + c + " ";
-    return void 0;
+    return this;
   };
 
   Element.prototype.removeClass = function(c) {
@@ -132,7 +132,7 @@
     if (this.className[0] === ' ') {
       this.className = this.className.substr(1);
     }
-    return void 0;
+    return this;
   };
 
   Element.prototype.hasClass = function(c) {
@@ -149,7 +149,7 @@
       el = this[_i];
       el.show();
     }
-    return void 0;
+    return this;
   };
 
   Element.prototype.hide = function() {
@@ -162,7 +162,7 @@
       el = this[_i];
       el.hide();
     }
-    return void 0;
+    return this;
   };
 
   Element.prototype.css = function(k, v) {
@@ -200,17 +200,16 @@
 
   Element.prototype.on = function(evt, callback) {
     this.addEventListener(evt, callback);
-    return void 0;
+    return this;
   };
 
   NodeList.prototype.on = function(evt, callback) {
-    var el, _i, _len, _results;
-    _results = [];
+    var el, _i, _len;
     for (_i = 0, _len = this.length; _i < _len; _i++) {
       el = this[_i];
-      _results.push(el.addEventListener(evt, callback));
+      el.addEventListener(evt, callback);
     }
-    return _results;
+    return this;
   };
 
   $ = Document;
