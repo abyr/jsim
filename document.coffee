@@ -4,7 +4,7 @@ Document = (s) ->
 
   if typeof s is 'function'
     document.ready s
-    return undefined
+    undefined
 
   @init = (s) ->
 
