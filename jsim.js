@@ -9,7 +9,3 @@
   };
 
 }).call(this);
-
-/*
-//@ sourceMappingURL=jsim.map
-*/
