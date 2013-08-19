@@ -38,7 +38,7 @@ Document = (s) ->
     document.getElementsByTagName s
 
   @bySelectors = (ss) ->
-    selectors = ss.split ","
+    selectors = ss.split(",")
     list = []
     i = selectors.length - 1
     while i >= 0
@@ -87,11 +87,23 @@ NodeList::clear = ->
 Element::addClass = (c) ->
   @.className += " " + c + " "
   @
+NodeList::addClass = (c) ->
+  el.addClass() for el in @
+  @
+
 Element::removeClass = (c) ->
-  r = new RegExp "\s"+c+'\\s?', 'gi'
+  r = new RegExp "\\s"+c+'\\s?', 'gi'
   @.className = (" " + @.className).replace r, ''
   @.className = @.className.substr 1 if @.className[0] is ' '
   @
+NodeList::removeClass = (c) ->
+  i = @length - 1
+  while i >= 0
+    el = this[i]
+    el.removeClass c
+    i--
+  @
+
 Element::hasClass = (c) ->
   @.className.split(" ").indexOf(c) isnt -1
 
